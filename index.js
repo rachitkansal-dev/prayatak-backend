@@ -32,12 +32,31 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 
-// CORS configuration
+
+
+// Define allowed origins for CORS
+const allowedOrigins = [
+  'http://localhost:3000', // Local development
+  'https://jazzy-florentine-807f93.netlify.app', // Netlify deployment
+];
+
+// Configure CORS options
 const corsOptions = {
-    origin: 'http://localhost:3000',
-    credentials: true,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or Postman) or from allowed origins
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Origin is allowed
+    } else {
+      console.error(`Not allowed by CORS: ${origin}`); // Log the blocked origin
+      callback(new Error('Not allowed by CORS')); // Block the origin
+    }
+  },
+  credentials: true, // Allow credentials (cookies, authorization headers)
 };
+
+// Apply CORS middleware
 app.use(cors(corsOptions));
+
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
