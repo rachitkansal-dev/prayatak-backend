@@ -37,7 +37,9 @@ app.use(methodOverride('_method'));
 // Define allowed origins for CORS
 const allowedOrigins = [
   'http://localhost:3000', // Local development
-  'https://jazzy-florentine-807f93.netlify.app', // Netlify deployment
+  'https://jazzy-florentine-807f93.netlify.app', 
+  'https://chipper-babka-ec4aa9.netlify.app',
+  // Netlify deployment
 ];
 
 // Configure CORS options
